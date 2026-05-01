@@ -19,6 +19,10 @@ import {
   FirmaDigitalV2,
   FD_V2_DURATION,
 } from "./scenes/firma-digital-v2/FirmaDigitalV2";
+import {
+  ColdBrewVideo,
+  COLDBREW_DURATION,
+} from "./scenes/coldbrew/ColdBrewVideo";
 import { VIDEO } from "./constants";
 
 export const RemotionRoot: React.FC = () => {
@@ -152,6 +156,17 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1350}
+        />
+      </Folder>
+
+      <Folder name="05-Tutorial-ColdBrew">
+        <Composition
+          id="ColdBrew-Stories"
+          component={ColdBrewVideo}
+          durationInFrames={COLDBREW_DURATION}
+          fps={30}
+          width={1080}
+          height={1920}
         />
       </Folder>
     </>
