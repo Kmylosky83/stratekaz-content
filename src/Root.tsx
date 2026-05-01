@@ -15,6 +15,10 @@ import {
   ContinuousStory3D,
   STORY_DURATION,
 } from "./scenes/showcase/ContinuousStory3D";
+import {
+  FirmaDigitalV2,
+  FD_V2_DURATION,
+} from "./scenes/firma-digital-v2/FirmaDigitalV2";
 import { VIDEO } from "./constants";
 
 export const RemotionRoot: React.FC = () => {
@@ -126,6 +130,14 @@ export const RemotionRoot: React.FC = () => {
           id="FirmaDigital-Feed"
           component={FirmaDigitalVideo}
           durationInFrames={1800}
+          fps={30}
+          width={1080}
+          height={1350}
+        />
+        <Composition
+          id="FirmaDigital-Feed-V2"
+          component={FirmaDigitalV2}
+          durationInFrames={FD_V2_DURATION}
           fps={30}
           width={1080}
           height={1350}
