@@ -10,6 +10,7 @@ import {
   IS_DIMENSIONS,
 } from "./scenes/intro-stratekaz/is-constants";
 import { Showcase, SHOWCASE_DURATION } from "./scenes/showcase/Showcase";
+import { Stage3D } from "./scenes/showcase/Stage3D";
 import { VIDEO } from "./constants";
 
 export const RemotionRoot: React.FC = () => {
@@ -20,6 +21,14 @@ export const RemotionRoot: React.FC = () => {
           id="Showcase-Stories"
           component={Showcase}
           durationInFrames={SHOWCASE_DURATION}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Stage3D-Standalone"
+          component={Stage3D}
+          durationInFrames={300}
           fps={30}
           width={1080}
           height={1920}

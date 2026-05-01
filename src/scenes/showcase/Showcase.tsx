@@ -41,11 +41,14 @@ import { WordHighlight } from "../../components/WordHighlight";
 import { CursorClick } from "../../components/CursorClick";
 import { Toast } from "../../components/Toast";
 
+// Real 3D stage (Three.js)
+import { Stage3D } from "./Stage3D";
+
 import { BRAND, FONTS } from "../../brand/tokens";
 
 const SEC = 30 * 9; // 270 frames = 9 seconds @ 30fps
-const TOTAL_SECTIONS = 8;
-export const SHOWCASE_DURATION = SEC * TOTAL_SECTIONS; // 2160 frames = 72s
+const TOTAL_SECTIONS = 9;
+export const SHOWCASE_DURATION = SEC * TOTAL_SECTIONS; // 2430 frames = 81s
 
 // ─── shared bits ────────────────────────────────────────────────────────────
 
@@ -756,6 +759,18 @@ const SectionUiDataViz: React.FC = () => {
   );
 };
 
+// ─── Section 9 — Real 3D Stage (climactic finale) ───────────────────────────
+const SectionThreeDReal: React.FC = () => (
+  <AbsoluteFill style={{ background: BRAND.bgDeep }}>
+    <Stage3D />
+    <SectionTitle
+      title="Real 3D Stage"
+      subtitle="@remotion/three · ThreeCanvas · drei"
+      align="bottom"
+    />
+  </AbsoluteFill>
+);
+
 // ─── Composition ────────────────────────────────────────────────────────────
 
 export const Showcase: React.FC = () => {
@@ -784,6 +799,9 @@ export const Showcase: React.FC = () => {
       </Series.Sequence>
       <Series.Sequence durationInFrames={SEC}>
         <SectionUiDataViz />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={SEC}>
+        <SectionThreeDReal />
       </Series.Sequence>
     </Series>
   );
