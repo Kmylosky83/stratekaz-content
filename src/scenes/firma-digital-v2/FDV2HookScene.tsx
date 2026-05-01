@@ -14,7 +14,6 @@ import { PenTool, ShieldCheck } from "lucide-react";
 import { KineticText } from "../../components/text/KineticText";
 import { SplitText } from "../../components/text/SplitText";
 import { WordHighlight } from "../../components/WordHighlight";
-import { GlitchFlash } from "../../effects/GlitchFlash";
 import { BurstRays } from "../../shapes/BurstRays";
 import { GlowPulse } from "../../effects/GlowPulse";
 import { FD, FD_FONTS } from "../firma-digital/fd-constants";
@@ -152,57 +151,70 @@ export const FDV2HookScene: React.FC = () => {
           />
         </div>
 
-        {/* ✨ NEW: SplitText "Firmar no es un checkbox" + GlitchFlash at strike */}
-        <div
-          style={{
-            textAlign: "center",
-            marginTop: 16,
-            position: "relative",
-            display: "inline-block",
-          }}
-        >
-          <GlitchFlash
-            startFrame={100}
-            durationInFrames={10}
-            intensity={1.2}
-          >
-            <span
+        {/* ✨ NEW: SplitText "Firmar no es un checkbox" with inline glitch impact at strike */}
+        {/* Inline filter/shake during strike window — does NOT use AbsoluteFill,
+            so the text flows horizontally as expected. */}
+        {(() => {
+          const inStrikeWindow = frame >= 100 && frame < 112;
+          const r = inStrikeWindow
+            ? ((frame * 9301 + 49297) % 233280) / 233280
+            : 0;
+          const decay = inStrikeWindow
+            ? 1 - (frame - 100) / 12
+            : 0;
+          const dx = (r - 0.5) * 8 * decay;
+          const dy = (r - 0.5) * 6 * decay;
+          const filter = inStrikeWindow
+            ? `brightness(${1 + 0.3 * decay}) hue-rotate(${(r - 0.5) * 30 * decay}deg)`
+            : "none";
+
+          return (
+            <div
               style={{
-                fontSize: 48,
-                fontWeight: 500,
-                color: "#999999",
-                fontFamily: FD_FONTS.body,
-                position: "relative",
-                display: "inline-block",
+                textAlign: "center",
+                marginTop: 16,
+                transform: `translate(${dx}px, ${dy}px)`,
+                filter,
               }}
             >
-              <SplitText
-                startFrame={70}
-                stagger={2}
-                fromY={20}
-                spring="smooth"
-              >
-                Firmar no es un checkbox
-              </SplitText>
-              <div
+              <span
                 style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: 0,
-                  width: `${strikeProgress * 100}%`,
-                  height: 3,
-                  background: "#FF1744",
-                  borderRadius: 2,
-                  boxShadow:
-                    strikeProgress > 0
-                      ? "0 0 12px #FF1744, 0 0 4px #FF1744"
-                      : "none",
-                  transformOrigin: "left center",
+                  fontSize: 48,
+                  fontWeight: 500,
+                  color: "#999999",
+                  fontFamily: FD_FONTS.body,
+                  position: "relative",
+                  display: "inline-block",
                 }}
-              />
-            </span>
-          </GlitchFlash>
-        </div>
+              >
+                <SplitText
+                  startFrame={70}
+                  stagger={2}
+                  fromY={20}
+                  spring="smooth"
+                >
+                  Firmar no es un checkbox
+                </SplitText>
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: 0,
+                    width: `${strikeProgress * 100}%`,
+                    height: 3,
+                    background: "#FF1744",
+                    borderRadius: 2,
+                    boxShadow:
+                      strikeProgress > 0
+                        ? "0 0 12px #FF1744, 0 0 4px #FF1744"
+                        : "none",
+                    transformOrigin: "left center",
+                  }}
+                />
+              </span>
+            </div>
+          );
+        })()}
 
         {/* Sello card "Es un sello criptográfico" — spring entrance + glow halo */}
         <div style={{ position: "relative", marginTop: 8 }}>
